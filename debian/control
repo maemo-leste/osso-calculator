@@ -6,7 +6,6 @@ Build-Depends: debhelper (>= 5), libqt4-dev
 
 Package: osso-calculator
 Architecture: all
-Section: misc
 Depends: osso-calculator-ui, osso-calculator-engine
 Description: Calculator meta package, that depends on UI and engine packages
 
