@@ -1,0 +1,65 @@
+Source: osso-calculator
+Section: misc
+Priority: optional
+Maintainer: Pali Rohár <pali.rohar@gmail.com>
+Build-Depends: debhelper (>= 5), libqt4-dev
+
+Package: osso-calculator
+Architecture: all
+Section: user/utilities
+Depends: osso-calculator-ui, osso-calculator-engine
+Description: Calculator meta package, that depends on UI and engine packages
+XSBC-Maemo-Display-Name: Calculator
+XB-Maemo-Icon-26:
+ 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
+ 3cRN3BD/AYW+Mvp7e2gGAAAAAElFTkSuQmCC
+
+Package: osso-calculator-ui
+Architecture: any
+Depends: osso-calculator-ui-l10n-mr0 | osso-calculator-ui-l10n-mr, osso-icons-default, ${shlibs:Depends}, ${misc:Depends}
+Description: OSSO Calculator UI
+ OSSO Calculator UI. Includes all calculation and memory functionalities.
