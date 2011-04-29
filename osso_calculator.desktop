@@ -10,5 +10,6 @@ X-Icon-path=/usr/share/pixmaps/
 X-Window-Icon=tn-bookmarks-link
 X-Window-Icon-Dimmed=tn-bookmarks-link-dimmed
 X-HildonDesk-ShowInToolbar=true
+X-Osso-Service=osso_calculator
 X-Osso-Type=application/x-executable
 X-Text-Domain=osso-calculator-ui

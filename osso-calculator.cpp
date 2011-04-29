@@ -26,12 +26,18 @@
 #include <QMenuBar>
 
 #ifdef Q_WS_MAEMO_5
+#include <QDBusConnection>
 #include <QMaemo5InformationBox>
 #endif
 
 #include "osso-calculator.h"
 #include "osso-calculator-ui.h"
 #include "osso-intl.h"
+
+#ifdef Q_WS_MAEMO_5
+#define DBUS_SERVICE "com.nokia.osso_calculator"
+#define DBUS_PATH    "/com/nokia/osso_calculator"
+#endif
 
 OssoCalculator::OssoCalculator(QObject * parent) : QObject(parent) {
 
@@ -43,6 +49,11 @@ OssoCalculator::OssoCalculator(QObject * parent) : QObject(parent) {
 
 	connect ( ui, SIGNAL( clickedButton(const QString &) ), this, SLOT( clickedButton(const QString &) ) );
 	window->setCentralWidget(ui);
+
+#ifdef Q_WS_MAEMO_5
+	QDBusConnection::sessionBus().registerService(DBUS_SERVICE);
+	QDBusConnection::sessionBus().registerObject(DBUS_PATH, this);
+#endif
 
 }
 

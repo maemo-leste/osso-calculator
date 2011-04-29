@@ -1,0 +1,4 @@
+# Sample service description file
+[D-BUS Service]
+Name=com.nokia.osso_calculator
+Exec=/usr/bin/osso_calculator

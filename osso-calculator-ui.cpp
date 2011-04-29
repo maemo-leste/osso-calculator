@@ -38,11 +38,16 @@
 #include <QTextBrowser>
 #include <QLineEdit>
 #include <QScrollBar>
+#include <QShowEvent>
 
 #include "osso-calculator.h"
 #include "osso-calculator-ui.h"
 #include "osso-calculator-button.h"
 #include "osso-intl.h"
+
+#ifdef Q_WS_MAEMO_5
+#include "osso-screenshot.h"
+#endif
 
 struct buttonLayout {
 
@@ -115,11 +120,34 @@ OssoCalculatorUI::OssoCalculatorUI(QMainWindow * window) {
 
 	displayEmpty = true;
 	numericDisabled = false;
+	screenshot = false;
+	winId = window->winId();
 
 	QRect screenGeometry = QApplication::desktop()->screenGeometry();
 	portrait = screenGeometry.width() < screenGeometry.height();
 
 	basic = QSettings(this).value("basicMode", true).toBool();
+
+	QActionGroup * mode = new QActionGroup(window);
+	QAction * basicMode = new QAction(_("calc_me_basic"), mode);
+	QAction * scientificMode = new QAction(_("calc_me_scientific"), mode);
+	QAction * clearHistory = new QAction(_("calc_me_clear_till_roll"), window);
+
+	mode->setExclusive(true);
+	basicMode->setCheckable(true);
+	basicMode->setChecked(basic);
+	basicMode->setObjectName("basicMode");
+	scientificMode->setCheckable(true);
+	scientificMode->setChecked(!basic);
+	scientificMode->setObjectName("scientificMode");
+
+	window->menuBar()->addActions(mode->actions());
+	window->menuBar()->addAction(clearHistory);
+	window->setWindowTitle(_("calc_ap_title_calculator"));
+
+#ifdef Q_WS_MAEMO_5
+	window->setAttribute(Qt::WA_Maemo5AutoOrientation, true);
+#endif
 
 	for ( int i = 0; ! buttonsDef[i].name.isEmpty(); ++i ) {
 
@@ -170,27 +198,6 @@ OssoCalculatorUI::OssoCalculatorUI(QMainWindow * window) {
 	history->setMinimumWidth(265);
 	historyList << QString();
 
-#ifdef Q_WS_MAEMO_5
-	window->setAttribute(Qt::WA_Maemo5AutoOrientation, true);
-#endif
-
-	QActionGroup * mode = new QActionGroup(window);
-	QAction * basicMode = new QAction(_("calc_me_basic"), mode);
-	QAction * scientificMode = new QAction(_("calc_me_scientific"), mode);
-	QAction * clearHistory = new QAction(_("calc_me_clear_till_roll"), window);
-
-	mode->setExclusive(true);
-	basicMode->setCheckable(true);
-	basicMode->setChecked(basic);
-	basicMode->setObjectName("basicMode");
-	scientificMode->setCheckable(true);
-	scientificMode->setChecked(!basic);
-	scientificMode->setObjectName("scientificMode");
-
-	window->menuBar()->addActions(mode->actions());
-	window->menuBar()->addAction(clearHistory);
-	window->setWindowTitle(_("calc_ap_title_calculator"));
-
 	connect ( mode, SIGNAL( triggered(QAction *) ), this, SLOT( modeChanged(QAction *) ) );
 	connect ( clearHistory, SIGNAL( triggered(bool) ), this, SLOT( historyErase() ) );
 	connect ( QApplication::desktop(), SIGNAL( resized(int) ), this, SLOT( orientationChanged() ) );
@@ -202,6 +209,21 @@ OssoCalculatorUI::OssoCalculatorUI(QMainWindow * window) {
 OssoCalculatorUI::~OssoCalculatorUI() {
 
 	deleteLayout();
+
+}
+
+void OssoCalculatorUI::showEvent(QShowEvent * event) {
+
+#ifdef Q_WS_MAEMO_5
+	if ( event->spontaneous() ) {
+
+		takeScreenshot(winId, screenshot);
+		screenshot = false;
+
+	}
+#else
+	Q_UNUSED(event)
+#endif
 
 }
 
@@ -219,6 +241,7 @@ void OssoCalculatorUI::modeChanged(QAction * action) {
 	if ( ! action->isChecked() )
 		return;
 
+	screenshot = true;
 	basic = action->objectName() == "basicMode";
 	QSettings(this).setValue("basicMode", basic);
 

@@ -31,6 +31,7 @@ class QVBoxLayout;
 class QGridLayout;
 class QLineEdit;
 class QTextBrowser;
+class QShowEvent;
 
 class OssoCalculator;
 class OssoCalculatorButton;
@@ -79,6 +80,8 @@ class OssoCalculatorUI : public QWidget
 		QGridLayout * buttonsLayout;
 		QHash <QString, OssoCalculatorButton *> buttons;
 
+		WId winId;
+		bool screenshot;
 		bool basic;
 		bool portrait;
 		bool numericDisabled;
@@ -87,6 +90,9 @@ class OssoCalculatorUI : public QWidget
 		void deleteLayout();
 		void createLayout();
 		void redraw();
+
+	protected:
+		void showEvent(QShowEvent * event);
 
 	signals:
 		void clickedButton(const QString &name);
