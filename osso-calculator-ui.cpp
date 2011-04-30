@@ -120,8 +120,6 @@ OssoCalculatorUI::OssoCalculatorUI(QMainWindow * window) {
 
 	displayEmpty = true;
 	numericDisabled = false;
-	screenshot = false;
-	winId = window->winId();
 
 	QRect screenGeometry = QApplication::desktop()->screenGeometry();
 	portrait = screenGeometry.width() < screenGeometry.height();
@@ -212,20 +210,13 @@ OssoCalculatorUI::~OssoCalculatorUI() {
 
 }
 
-void OssoCalculatorUI::showEvent(QShowEvent * event) {
-
 #ifdef Q_WS_MAEMO_5
-	if ( event->spontaneous() ) {
+void OssoCalculatorUI::takeScreenshot(bool take) {
 
-		takeScreenshot(winId, screenshot);
-		screenshot = false;
-
-	}
-#else
-	Q_UNUSED(event)
-#endif
+	windowTakeScreenshot(parentWidget()->winId(), take);
 
 }
+#endif
 
 void OssoCalculatorUI::orientationChanged() {
 
@@ -241,9 +232,12 @@ void OssoCalculatorUI::modeChanged(QAction * action) {
 	if ( ! action->isChecked() )
 		return;
 
-	screenshot = true;
 	basic = action->objectName() == "basicMode";
 	QSettings(this).setValue("basicMode", basic);
+
+#ifdef Q_WS_MAEMO_5
+	takeScreenshot(false);
+#endif
 
 	redraw();
 

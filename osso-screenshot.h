@@ -17,6 +17,9 @@
 
 */
 
+#ifndef OSSO_SCREENSHOT
+#define OSSO_SCREENSHOT
+
 #ifdef Q_WS_MAEMO_5
 
 #include <QWidget>
@@ -24,13 +27,13 @@
 
 #include <X11/Xlib.h>
 
-void takeScreenshot(WId winId, bool take) {
+static inline void windowTakeScreenshot(WId winId, bool take) {
 
 	XEvent event = { 0 };
 
 	event.xclient.type = ClientMessage;
 	event.xclient.serial = 0;
-	event.xclient.send_event = True;
+	event.xclient.send_event = true;
 	event.xclient.display = QX11Info::display();
 	event.xclient.window = QX11Info::appRootWindow();
 	event.xclient.message_type = XInternAtom(QX11Info::display(), "_HILDON_LOADING_SCREENSHOT", false);
@@ -43,5 +46,7 @@ void takeScreenshot(WId winId, bool take) {
 	XSync(QX11Info::display(), false);
 
 }
+
+#endif
 
 #endif

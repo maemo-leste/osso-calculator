@@ -19,6 +19,7 @@
 
 #include <QObject>
 #include <QProcess>
+#include <QTimer>
 #include <QString>
 #include <QStringList>
 
@@ -66,6 +67,10 @@ OssoCalculator::~OssoCalculator() {
 void OssoCalculator::show() {
 
 	window->show();
+
+#ifdef Q_WS_MAEMO_5
+	QTimer::singleShot ( 700, ui, SLOT( takeScreenshot() ) );
+#endif
 
 }
 

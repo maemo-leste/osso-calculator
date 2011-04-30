@@ -63,6 +63,9 @@ class OssoCalculatorUI : public QWidget
 		void historyRedraw();
 
 	public slots:
+#ifdef Q_WS_MAEMO_5
+		void takeScreenshot(bool take = true);
+#endif
 		void historyErase();
 
 	private slots:
@@ -80,8 +83,6 @@ class OssoCalculatorUI : public QWidget
 		QGridLayout * buttonsLayout;
 		QHash <QString, OssoCalculatorButton *> buttons;
 
-		WId winId;
-		bool screenshot;
 		bool basic;
 		bool portrait;
 		bool numericDisabled;
@@ -90,9 +91,6 @@ class OssoCalculatorUI : public QWidget
 		void deleteLayout();
 		void createLayout();
 		void redraw();
-
-	protected:
-		void showEvent(QShowEvent * event);
 
 	signals:
 		void clickedButton(const QString &name);

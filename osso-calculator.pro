@@ -33,5 +33,5 @@ maemo5 {
    QT += dbus maemo5
 }
 
-HEADERS += osso-calculator.h osso-calculator-ui.h osso-calculator-button.h osso-intl.h
+HEADERS += osso-calculator.h osso-calculator-ui.h osso-calculator-button.h osso-intl.h osso-screenshot.h
 SOURCES += main.cpp osso-calculator.cpp osso-calculator-ui.cpp osso-calculator-button.cpp

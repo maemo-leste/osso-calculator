@@ -17,6 +17,9 @@
 
 */
 
+#ifndef OSSO_INTL
+#define OSSO_INTL
+
 #include <QByteArray>
 #include <QString>
 
@@ -42,3 +45,5 @@ static inline const QString _(const QString &str) {
 	return _(str.toUtf8().data());
 
 }
+
+#endif
