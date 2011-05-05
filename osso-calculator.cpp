@@ -77,7 +77,7 @@ void OssoCalculator::show() {
 QString OssoCalculator::executeCommand(const QString &command) {
 
 	QProcess process(this);
-	process.start("osso_calculator_engine", QStringList() << "-dp" << command);
+	process.start("osso_calculator_engine", QStringList() << "-dp" << "--" << command);
 
 	if ( ! process.waitForStarted() )
 		return QString();
@@ -128,15 +128,28 @@ void OssoCalculator::clickedButton(const QString &name) {
 
 	if ( name.size() == 1 && name.at(0).isDigit() ) {
 
-		ui->displayAppend(name);
+		if ( ui->displayText().isEmpty() && name == "0" ) {
+
+			ui->displaySetText(name);
+			ui->displayErase();
+
+		} else {
+
+			ui->displayAppend(name);
+
+		}
 
 	} else if ( name == "calc_bv_desk_ac" || name == "calc_bv_desk_c" ) {
 
 		ui->displaySetText("0");
 		ui->displayErase();
 
-		if ( name == "calc_bv_desk_ac" )
+		if ( name == "calc_bv_desk_ac" ) {
+
 			expression.clear();
+			ui->historyRemoveLast();
+
+		}
 
 	} else if ( name == "calc_bv_tr_back" ) {
 

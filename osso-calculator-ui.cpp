@@ -427,6 +427,13 @@ void OssoCalculatorUI::historyAppendResult(const QString &res) {
 
 }
 
+void OssoCalculatorUI::historyRemoveLast() {
+
+	historyList.last().clear();
+	historyRedraw();
+
+}
+
 void OssoCalculatorUI::historyRedraw() {
 
 	QString html;

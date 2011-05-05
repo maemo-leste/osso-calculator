@@ -60,6 +60,7 @@ class OssoCalculatorUI : public QWidget
 
 		void historyAppendExpression(const QString &expr);
 		void historyAppendResult(const QString &res);
+		void historyRemoveLast();
 		void historyRedraw();
 
 	public slots:
