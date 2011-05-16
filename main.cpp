@@ -19,6 +19,10 @@
 
 #include <QApplication>
 
+#ifdef Q_WS_MAEMO_5
+#include <QDBusConnection>
+#endif
+
 #include "osso-calculator.h"
 #include "osso-intl.h"
 
@@ -31,6 +35,15 @@ int main(int argc, char * argv[]) {
 	app.setApplicationName("osso-calculator-ui");
 
 	OssoCalculator calculator;
+
+#ifdef Q_WS_MAEMO_5
+	if ( ! QDBusConnection::sessionBus().registerService("com.nokia.osso_calculator") )
+		return 1;
+
+	if ( ! QDBusConnection::sessionBus().registerObject("/com/nokia/osso_calculator", &calculator) )
+		return 1;
+#endif
+
 	calculator.show();
 
 	return app.exec();

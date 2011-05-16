@@ -21,16 +21,17 @@ TEMPLATE = app
 TARGET = osso_calculator
 
 unix {
-   INSTALLS += target desktop service
+   INSTALLS += target desktop
    target.path = $$PREFIX/bin
    desktop.path = $$PREFIX/share/applications/hildon
    desktop.files += osso_calculator.desktop
-   service.path = $$PREFIX/share/dbus-1/services
-   service.files += com.nokia.osso_calculator.service
 }
 
 maemo5 {
    QT += dbus maemo5
+   INSTALLS += service
+   service.path = $$PREFIX/share/dbus-1/services
+   service.files += com.nokia.osso_calculator.service
 }
 
 HEADERS += osso-calculator.h osso-calculator-ui.h osso-calculator-button.h osso-intl.h osso-screenshot.h
