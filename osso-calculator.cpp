@@ -241,35 +241,34 @@ void OssoCalculator::clickedButton(const QString &name) {
 		ui->historyAppendExpression(_(name) + ui->displayText(false) + ' ');
 		ui->displayErase();
 
-	} else if ( name == "calc_bv_tr_percent" ) {
+	} else if ( name == "calc_bv_tr_percent" ||
+			name == "calc_bv_tr_add" ||
+			name == "calc_bv_tr_subtract" ||
+			name == "calc_bv_tr_multiply" ||
+			name == "calc_bv_tr_divide" ) {
 
-		expression += '(' + ui->displayText(false) + ") * 0.01 * ";
-		ui->historyAppendExpression(ui->displayText(false) + ' ' + _(name) + ' ');
+		QChar last = expression.trimmed().at(expression.trimmed().size()-1);
+
+		if ( ! last.isDigit() && last != ')' ) {
+
+			expression += '(' + ui->displayText(false) + ')';
+			ui->historyAppendExpression(ui->displayText(false));
+
+		}
+
+		ui->historyAppendExpression(' ' + _(name) + ' ');
 		ui->displayErase();
 
-	} else if ( name == "calc_bv_tr_add" ) {
-
-		expression += '(' + ui->displayText(false) + ") + ";
-		ui->historyAppendExpression(ui->displayText(false) + ' ' + _(name) + ' ');
-		ui->displayErase();
-
-	} else if ( name == "calc_bv_tr_subtract" ) {
-
-		expression += '(' + ui->displayText(false) + ") - ";
-		ui->historyAppendExpression(ui->displayText(false) + ' ' + _(name) + ' ');
-		ui->displayErase();
-
-	} else if ( name == "calc_bv_tr_multiply" ) {
-
-		expression += '(' + ui->displayText(false) + ") * ";
-		ui->historyAppendExpression(ui->displayText(false) + ' ' + _(name) + ' ');
-		ui->displayErase();
-
-	} else if ( name == "calc_bv_tr_divide" ) {
-
-		expression += '(' + ui->displayText(false) + ") / ";
-		ui->historyAppendExpression(ui->displayText(false) + ' ' + _(name) + ' ');
-		ui->displayErase();
+		if ( name == "calc_bv_tr_percent" )
+			expression += " * 0.01 * ";
+		else if ( name == "calc_bv_tr_add" )
+			expression += " + ";
+		else if ( name == "calc_bv_tr_subtract" )
+			expression += " - ";
+		else if ( name == "calc_bv_tr_multiply" )
+			expression += " * ";
+		else if ( name == "calc_bv_tr_divide" )
+			expression += " / ";
 
 	} else if ( name == "calc_bv_tr_equals" ) {
 
@@ -278,6 +277,17 @@ void OssoCalculator::clickedButton(const QString &name) {
 			expression += ui->displayText() + ' ';
 			ui->historyAppendExpression(ui->displayText() + ' ');
 			ui->displayErase();
+
+		} else {
+
+			QChar last = expression.trimmed().at(expression.trimmed().size()-1);
+
+			if ( ! last.isDigit() && last != ')' ) {
+
+				expression += ui->displayText(false) + ' ';
+				ui->historyAppendExpression(ui->displayText(false) + ' ');
+
+			}
 
 		}
 
