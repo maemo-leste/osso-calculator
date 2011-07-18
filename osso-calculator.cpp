@@ -207,7 +207,7 @@ void OssoCalculator::clickedButton(const QString &name) {
 
 		if ( ui->displayText().isEmpty() )
 			ui->displaySetText("0.");
-		else
+		else if ( ! ui->displayText().contains('.') )
 			ui->displaySetText(ui->displayText() + '.');
 
 	} else if ( name == "calc_bv_tr_unaryminus" && ui->displayText() != "0" ) {
