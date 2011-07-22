@@ -35,9 +35,9 @@ class QShowEvent;
 
 class OssoCalculator;
 class OssoCalculatorButton;
+class OssoCalculatorFrame;
 
-class OssoCalculatorUI : public QWidget
-{
+class OssoCalculatorUI : public QWidget {
 
 	Q_OBJECT
 
@@ -78,8 +78,11 @@ class OssoCalculatorUI : public QWidget
 
 		QVBoxLayout * displayLayout;
 		QLineEdit * display;
-		QTextBrowser * history;
 		QStringList historyList;
+
+		QVBoxLayout * historyLayout;
+		OssoCalculatorFrame * historyFrame;
+		QTextBrowser * history;
 
 		QGridLayout * buttonsLayout;
 		QHash <QString, OssoCalculatorButton *> buttons;

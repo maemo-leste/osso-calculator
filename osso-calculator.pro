@@ -34,5 +34,5 @@ maemo5 {
    service.files += com.nokia.osso_calculator.service
 }
 
-HEADERS += osso-calculator.h osso-calculator-ui.h osso-calculator-button.h osso-intl.h osso-screenshot.h
-SOURCES += main.cpp osso-calculator.cpp osso-calculator-ui.cpp osso-calculator-button.cpp
+HEADERS += osso-calculator.h osso-calculator-button.h osso-calculator-frame.h osso-calculator-ui.h osso-intl.h osso-screenshot.h
+SOURCES += main.cpp osso-calculator.cpp osso-calculator-button.cpp osso-calculator-frame.cpp osso-calculator-ui.cpp

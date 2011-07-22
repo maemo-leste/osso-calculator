@@ -43,6 +43,7 @@
 #include "osso-calculator.h"
 #include "osso-calculator-ui.h"
 #include "osso-calculator-button.h"
+#include "osso-calculator-frame.h"
 #include "osso-intl.h"
 
 #ifdef Q_WS_MAEMO_5
@@ -116,7 +117,9 @@ static const struct buttonDef buttonsDef[] = {
 OssoCalculatorUI::OssoCalculatorUI(QMainWindow * window) {
 
 	display = new QLineEdit(this);
-	history = new QTextBrowser(this);
+	historyFrame = new OssoCalculatorFrame(this);
+	historyLayout = new QVBoxLayout(historyFrame);
+	history = new QTextBrowser(historyFrame);
 
 	displayEmpty = true;
 	numericDisabled = false;
@@ -155,14 +158,15 @@ OssoCalculatorUI::OssoCalculatorUI(QMainWindow * window) {
 
 #ifdef Q_WS_MAEMO_5
 		QPalette palette = button->palette();
-		palette.setColor(QPalette::Button, buttonsDef[i].backgroundColor);
-		palette.setColor(QPalette::ButtonText, buttonsDef[i].textColor);
+		palette.setColor(QPalette::Normal, QPalette::Button, buttonsDef[i].backgroundColor);
+		palette.setColor(QPalette::Normal, QPalette::ButtonText, buttonsDef[i].textColor);
 		button->setPalette(palette);
 #endif
 
 		if ( buttonsDef[i].shortcut != -1 )
 			button->setShortcut(QKeySequence(buttonsDef[i].shortcut));
 
+#ifdef Q_WS_MAEMO_5
 		if ( buttonsDef[i].name == "calc_bv_tr_back" ) {
 
 			QPixmap icon("/usr/share/icons/hicolor/32x32/hildon/general_backspace.png");
@@ -175,6 +179,7 @@ OssoCalculatorUI::OssoCalculatorUI(QMainWindow * window) {
 			}
 
 		}
+#endif
 
 		connect ( button, SIGNAL( clicked(const QString &) ), this, SIGNAL( clickedButton(const QString &) ) );
 
@@ -189,11 +194,17 @@ OssoCalculatorUI::OssoCalculatorUI(QMainWindow * window) {
 	displaySetText("0");
 	displayErase();
 
+	historyLayout->setSpacing(0);
+	historyLayout->setContentsMargins(4, 4, 4, 4);
+	historyLayout->addWidget(history);
+
 	QPalette palette = history->palette();
 	palette.setColor(QPalette::Text, palette.color(QPalette::WindowText));
 	palette.setColor(QPalette::Base, palette.color(QPalette::Window));
 	history->setPalette(palette);
 	history->setMinimumWidth(265);
+	history->setTextInteractionFlags(Qt::TextSelectableByMouse | Qt::TextSelectableByKeyboard);
+
 	historyList << QString();
 
 	connect ( mode, SIGNAL( triggered(QAction *) ), this, SLOT( modeChanged(QAction *) ) );
@@ -270,10 +281,12 @@ void OssoCalculatorUI::createLayout() {
 
 	displayLayout->setContentsMargins(0, 17, 0, 10);
 	displayLayout->addWidget(display);
-	displayLayout->addWidget(history);
+	displayLayout->addWidget(historyFrame);
 
 	if ( ! portrait )
 		buttonsLayout->setContentsMargins(10, 17, 0, 10);
+
+	buttonsLayout->setSpacing(12);
 
 	for ( int i = 0; ! buttonsDef[i].name.isEmpty(); ++i ) {
 
@@ -304,6 +317,8 @@ void OssoCalculatorUI::createLayout() {
 
 	centralLayout->addLayout(displayLayout);
 	centralLayout->addLayout(buttonsLayout);
+
+	adjustSize();
 
 	history->verticalScrollBar()->setValue(history->verticalScrollBar()->maximum());
 
@@ -455,6 +470,7 @@ void OssoCalculatorUI::historyRedraw() {
 
 	history->setHtml(html);
 	history->verticalScrollBar()->setValue(history->verticalScrollBar()->maximum());
+	history->moveCursor(QTextCursor::End);
 
 }
 

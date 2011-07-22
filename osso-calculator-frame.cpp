@@ -1,6 +1,7 @@
 /*
-    osso-calculator-button.h - OSSO Calculator
+    osso-calculator-frame.cpp - OSSO Calculator
     Copyright (C) 2011  Pali Rohár <pali.rohar@gmail.com>
+    Copyright (C) 2011  Ivaylo Dimitrov <freemangordon@abv.bg>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,36 +18,17 @@
 
 */
 
-#ifndef OSSO_CALCULATOR_BUTTON_H
-#define OSSO_CALCULATOR_BUTTON_H
+#include <QPainter>
+#include <QPaintEvent>
 
-#include <QPushButton>
+#include "osso-calculator-frame.h"
 
-class QString;
-class QWidget;
+OssoCalculatorFrame::OssoCalculatorFrame(QWidget *parent) : QFrame(parent) { }
 
-#ifdef Q_WS_MAEMO_5
-class QPaintEvent;
-#endif
+void OssoCalculatorFrame::paintEvent(QPaintEvent *) {
 
-class OssoCalculatorButton : public QPushButton {
+	QPainter paint(this);
+	paint.setPen(QPen(QColor(40, 40, 40)));
+	paint.drawRoundedRect(0, 0, width()-1, height()-1, 8, 8);
 
-	Q_OBJECT
-
-	public:
-		OssoCalculatorButton(const QString &name, QWidget * parent = NULL);
-
-	private slots:
-		void clicked();
-
-	signals:
-		void clicked(const QString &button);
-
-#ifdef Q_WS_MAEMO_5
-	protected:
-		void paintEvent(QPaintEvent *);
-#endif
-
-};
-
-#endif
+}

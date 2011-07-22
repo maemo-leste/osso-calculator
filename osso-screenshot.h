@@ -17,8 +17,8 @@
 
 */
 
-#ifndef OSSO_SCREENSHOT
-#define OSSO_SCREENSHOT
+#ifndef OSSO_SCREENSHOT_H
+#define OSSO_SCREENSHOT_H
 
 #ifdef Q_WS_MAEMO_5
 

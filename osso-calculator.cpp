@@ -302,6 +302,16 @@ void OssoCalculator::clickedButton(const QString &name) {
 		QString result = executeCommand(expression);
 		expression.clear();
 
+		if ( ! result.isEmpty() ) {
+
+			bool ok;
+			result = QString("%1").arg(result.toDouble(&ok), 0, 'g', 12);
+
+			if ( ! ok )
+				result.clear();
+
+		}
+
 		if ( result.isEmpty() ) {
 
 			ui->historyAppendResult("<b>" + _("calc_gi_e") + "</b>");
