@@ -25,9 +25,7 @@
 class QString;
 class QWidget;
 
-#ifdef Q_WS_MAEMO_5
 class QPaintEvent;
-#endif
 
 class OssoCalculatorButton : public QPushButton {
 
@@ -35,17 +33,20 @@ class OssoCalculatorButton : public QPushButton {
 
 	public:
 		OssoCalculatorButton(const QString &name, QWidget * parent = NULL);
+		const QString & name();
+
+	private:
+		QString buttonName;
+		QString textColor;
 
 	private slots:
 		void clicked();
 
+	protected:
+		void paintEvent(QPaintEvent * event);
+
 	signals:
 		void clicked(const QString &button);
-
-#ifdef Q_WS_MAEMO_5
-	protected:
-		void paintEvent(QPaintEvent *);
-#endif
 
 };
 

@@ -31,7 +31,6 @@
 #include <QMenuBar>
 #include <QAction>
 #include <QPalette>
-#include <QColor>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGridLayout>
@@ -63,8 +62,6 @@ struct buttonDef {
 
 	QByteArray name;
 	int shortcut;
-	QColor backgroundColor;
-	QColor textColor;
 	buttonLayout basic;
 	buttonLayout basicPortrait;
 	buttonLayout scientific;
@@ -74,43 +71,43 @@ struct buttonDef {
 
 static const struct buttonDef buttonsDef[] = {
 
-	{ "calc_bv_desk_ac",         -1,                QColor(99, 97, 99), QColor(227,   0,  42), { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 0, 0, 1, 1 }, { 0, 0, 1, 1 } },
-	{ "calc_bv_desk_c",          Qt::Key_C,         QColor(99, 97, 99), QColor(227,   0,  42), { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 0, 1, 1, 1 }, { 0, 1, 1, 1 } },
-	{ "calc_bv_tr_back",         Qt::Key_Backspace, QColor(99, 97, 99), QColor(227,   0,  42), {  0,  0, 1, 1 }, {  4,  2, 1, 1 }, { 5, 0, 1, 1 }, { 5, 0, 1, 1 } },
+	{ "calc_bv_desk_ac",         -1,                { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 0, 0, 1, 1 }, { 0, 0, 1, 1 } },
+	{ "calc_bv_desk_c",          Qt::Key_C,         { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 0, 1, 1, 1 }, { 0, 1, 1, 1 } },
+	{ "calc_bv_tr_back",         Qt::Key_Backspace, {  0,  0, 1, 1 }, {  4,  2, 1, 1 }, { 5, 0, 1, 1 }, { 5, 0, 1, 1 } },
 
-	{ "calc_bv_tr_openbracket",  Qt::Key_H,         QColor(99, 97, 99), QColor(255, 255, 255), { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 0, 2, 1, 1 }, { 0, 2, 1, 1 } },
-	{ "calc_bv_tr_closebracket", Qt::Key_J,         QColor(99, 97, 99), QColor(255, 255, 255), { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 0, 3, 1, 1 }, { 0, 3, 1, 1 } },
+	{ "calc_bv_tr_openbracket",  Qt::Key_H,         { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 0, 2, 1, 1 }, { 0, 2, 1, 1 } },
+	{ "calc_bv_tr_closebracket", Qt::Key_J,         { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 0, 3, 1, 1 }, { 0, 3, 1, 1 } },
 
-	{ "calc_bv_tr_min",          -1,                QColor(99, 97, 99), QColor(134, 213, 252), { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 1, 0, 1, 1 }, { 1, 0, 1, 1 } },
-	{ "calc_bv_tr_mplus",        -1,                QColor(99, 97, 99), QColor(134, 213, 252), { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 2, 0, 1, 1 }, { 2, 0, 1, 1 } },
-	{ "calc_bv_tr_mminus",       -1,                QColor(99, 97, 99), QColor(134, 213, 252), { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 3, 0, 1, 1 }, { 3, 0, 1, 1 } },
-	{ "calc_bv_tr_mr",           -1,                QColor(99, 97, 99), QColor(134, 213, 252), { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 4, 0, 1, 1 }, { 4, 0, 1, 1 } },
+	{ "calc_bv_tr_min",          -1,                { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 1, 0, 1, 1 }, { 1, 0, 1, 1 } },
+	{ "calc_bv_tr_mplus",        -1,                { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 2, 0, 1, 1 }, { 2, 0, 1, 1 } },
+	{ "calc_bv_tr_mminus",       -1,                { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 3, 0, 1, 1 }, { 3, 0, 1, 1 } },
+	{ "calc_bv_tr_mr",           -1,                { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 4, 0, 1, 1 }, { 4, 0, 1, 1 } },
 
-	{ "0",                       Qt::Key_P,         QColor(49, 44, 49), QColor(255, 255, 255), {  4,  1, 1, 2 }, {  4,  0, 1, 1 }, { 5, 1, 1, 1 }, { 5, 1, 1, 1 } },
-	{ "1",                       Qt::Key_Q,         QColor(49, 44, 49), QColor(255, 255, 255), {  3,  1, 1, 1 }, {  3,  0, 1, 1 }, { 4, 1, 1, 1 }, { 4, 1, 1, 1 } },
-	{ "2",                       Qt::Key_W,         QColor(49, 44, 49), QColor(255, 255, 255), {  3,  2, 1, 1 }, {  3,  1, 1, 1 }, { 4, 2, 1, 1 }, { 4, 2, 1, 1 } },
-	{ "3",                       Qt::Key_E,         QColor(49, 44, 49), QColor(255, 255, 255), {  3,  3, 1, 1 }, {  3,  2, 1, 1 }, { 4, 3, 1, 1 }, { 4, 3, 1, 1 } },
-	{ "4",                       Qt::Key_R,         QColor(49, 44, 49), QColor(255, 255, 255), {  2,  1, 1, 1 }, {  2,  0, 1, 1 }, { 3, 1, 1, 1 }, { 3, 1, 1, 1 } },
-	{ "5",                       Qt::Key_T,         QColor(49, 44, 49), QColor(255, 255, 255), {  2,  2, 1, 1 }, {  2,  1, 1, 1 }, { 3, 2, 1, 1 }, { 3, 2, 1, 1 } },
-	{ "6",                       Qt::Key_Y,         QColor(49, 44, 49), QColor(255, 255, 255), {  2,  3, 1, 1 }, {  2,  2, 1, 1 }, { 3, 3, 1, 1 }, { 3, 3, 1, 1 } },
-	{ "7",                       Qt::Key_U,         QColor(49, 44, 49), QColor(255, 255, 255), {  1,  1, 1, 1 }, {  1,  0, 1, 1 }, { 2, 1, 1, 1 }, { 2, 1, 1, 1 } },
-	{ "8",                       Qt::Key_I,         QColor(49, 44, 49), QColor(255, 255, 255), {  1,  2, 1, 1 }, {  1,  1, 1, 1 }, { 2, 2, 1, 1 }, { 2, 2, 1, 1 } },
-	{ "9",                       Qt::Key_O,         QColor(49, 44, 49), QColor(255, 255, 255), {  1,  3, 1, 1 }, {  1,  2, 1, 1 }, { 2, 3, 1, 1 }, { 2, 3, 1, 1 } },
-	{ "calc_bv_tr_decimal",      Qt::Key_Period,    QColor(49, 44, 49), QColor(255, 255, 255), {  4,  3, 1, 1 }, {  4,  1, 1, 1 }, { 5, 2, 1, 1 }, { 5, 2, 1, 1 } },
-	{ "calc_bv_tr_unaryminus",   -1,                QColor(99, 97, 99), QColor(255, 255, 255), {  0,  1, 1, 1 }, {  0,  0, 1, 1 }, { 5, 3, 1, 1 }, { 5, 3, 1, 1 } },
+	{ "0",                       Qt::Key_P,         {  4,  1, 1, 2 }, {  4,  0, 1, 1 }, { 5, 1, 1, 1 }, { 5, 1, 1, 1 } },
+	{ "1",                       Qt::Key_Q,         {  3,  1, 1, 1 }, {  3,  0, 1, 1 }, { 4, 1, 1, 1 }, { 4, 1, 1, 1 } },
+	{ "2",                       Qt::Key_W,         {  3,  2, 1, 1 }, {  3,  1, 1, 1 }, { 4, 2, 1, 1 }, { 4, 2, 1, 1 } },
+	{ "3",                       Qt::Key_E,         {  3,  3, 1, 1 }, {  3,  2, 1, 1 }, { 4, 3, 1, 1 }, { 4, 3, 1, 1 } },
+	{ "4",                       Qt::Key_R,         {  2,  1, 1, 1 }, {  2,  0, 1, 1 }, { 3, 1, 1, 1 }, { 3, 1, 1, 1 } },
+	{ "5",                       Qt::Key_T,         {  2,  2, 1, 1 }, {  2,  1, 1, 1 }, { 3, 2, 1, 1 }, { 3, 2, 1, 1 } },
+	{ "6",                       Qt::Key_Y,         {  2,  3, 1, 1 }, {  2,  2, 1, 1 }, { 3, 3, 1, 1 }, { 3, 3, 1, 1 } },
+	{ "7",                       Qt::Key_U,         {  1,  1, 1, 1 }, {  1,  0, 1, 1 }, { 2, 1, 1, 1 }, { 2, 1, 1, 1 } },
+	{ "8",                       Qt::Key_I,         {  1,  2, 1, 1 }, {  1,  1, 1, 1 }, { 2, 2, 1, 1 }, { 2, 2, 1, 1 } },
+	{ "9",                       Qt::Key_O,         {  1,  3, 1, 1 }, {  1,  2, 1, 1 }, { 2, 3, 1, 1 }, { 2, 3, 1, 1 } },
+	{ "calc_bv_tr_decimal",      Qt::Key_Period,    {  4,  3, 1, 1 }, {  4,  1, 1, 1 }, { 5, 2, 1, 1 }, { 5, 2, 1, 1 } },
+	{ "calc_bv_tr_unaryminus",   -1,                {  0,  1, 1, 1 }, {  0,  0, 1, 1 }, { 5, 3, 1, 1 }, { 5, 3, 1, 1 } },
 
-	{ "calc_bv_tr_reciprocal",   -1,                QColor(99, 97, 99), QColor(255, 255, 255), { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 0, 4, 1, 1 }, { 0, 4, 1, 1 } },
-	{ "calc_bv_tr_powerof",      -1,                QColor(99, 97, 99), QColor(255, 255, 255), { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 1, 1, 1, 1 }, { 1, 1, 1, 1 } },
-	{ "calc_bv_tr_sqroot",       -1,                QColor(99, 97, 99), QColor(255, 255, 255), { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 1, 2, 1, 1 }, { 1, 2, 1, 1 } },
-	{ "calc_bv_tr_percent",      -1,                QColor(99, 97, 99), QColor(255, 255, 255), { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 1, 3, 1, 1 }, { 1, 3, 1, 1 } },
+	{ "calc_bv_tr_reciprocal",   -1,                { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 0, 4, 1, 1 }, { 0, 4, 1, 1 } },
+	{ "calc_bv_tr_powerof",      -1,                { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 1, 1, 1, 1 }, { 1, 1, 1, 1 } },
+	{ "calc_bv_tr_sqroot",       -1,                { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 1, 2, 1, 1 }, { 1, 2, 1, 1 } },
+	{ "calc_bv_tr_percent",      -1,                { -1, -1, 1, 1 }, { -1, -1, 1, 1 }, { 1, 3, 1, 1 }, { 1, 3, 1, 1 } },
 
-	{ "calc_bv_tr_divide",       Qt::Key_V,         QColor(99, 97, 99), QColor(255, 255, 255), {  0,  2, 1, 1 }, {  0,  1, 1, 1 }, { 1, 4, 1, 1 }, { 1, 4, 1, 1 } },
-	{ "calc_bv_tr_multiply",     Qt::Key_A,         QColor(99, 97, 99), QColor(255, 255, 255), {  0,  3, 1, 1 }, {  0,  2, 1, 1 }, { 2, 4, 1, 1 }, { 2, 4, 1, 1 } },
-	{ "calc_bv_tr_subtract",     Qt::Key_F,         QColor(99, 97, 99), QColor(255, 255, 255), {  0,  4, 1, 1 }, {  0,  3, 1, 1 }, { 3, 4, 1, 1 }, { 3, 4, 1, 1 } },
-	{ "calc_bv_tr_add",          Qt::Key_S,         QColor(99, 97, 99), QColor(255, 255, 255), {  1,  4, 2, 1 }, {  1,  3, 2, 1 }, { 4, 4, 1, 1 }, { 4, 4, 1, 1 } },
-	{ "calc_bv_tr_equals",       Qt::Key_Comma,     QColor(99, 97, 99), QColor(255, 255, 255), {  3,  4, 2, 1 }, {  3,  3, 2, 1 }, { 5, 4, 1, 1 }, { 5, 4, 1, 1 } },
+	{ "calc_bv_tr_divide",       Qt::Key_V,         {  0,  2, 1, 1 }, {  0,  1, 1, 1 }, { 1, 4, 1, 1 }, { 1, 4, 1, 1 } },
+	{ "calc_bv_tr_multiply",     Qt::Key_A,         {  0,  3, 1, 1 }, {  0,  2, 1, 1 }, { 2, 4, 1, 1 }, { 2, 4, 1, 1 } },
+	{ "calc_bv_tr_subtract",     Qt::Key_F,         {  0,  4, 1, 1 }, {  0,  3, 1, 1 }, { 3, 4, 1, 1 }, { 3, 4, 1, 1 } },
+	{ "calc_bv_tr_add",          Qt::Key_S,         {  1,  4, 2, 1 }, {  1,  3, 2, 1 }, { 4, 4, 1, 1 }, { 4, 4, 1, 1 } },
+	{ "calc_bv_tr_equals",       Qt::Key_Comma,     {  3,  4, 2, 1 }, {  3,  3, 2, 1 }, { 5, 4, 1, 1 }, { 5, 4, 1, 1 } },
 
-	{ QByteArray(), 0, QColor(0, 0, 0), QColor(0, 0, 0), { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } }
+	{ QByteArray(), 0, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } }
 
 };
 
@@ -155,13 +152,6 @@ OssoCalculatorUI::OssoCalculatorUI(QMainWindow * window) {
 		OssoCalculatorButton * button = new OssoCalculatorButton(buttonsDef[i].name, this);
 		button->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum));
 		button->hide();
-
-#ifdef Q_WS_MAEMO_5
-		QPalette palette = button->palette();
-		palette.setColor(QPalette::Normal, QPalette::Button, buttonsDef[i].backgroundColor);
-		palette.setColor(QPalette::Normal, QPalette::ButtonText, buttonsDef[i].textColor);
-		button->setPalette(palette);
-#endif
 
 		if ( buttonsDef[i].shortcut != -1 )
 			button->setShortcut(QKeySequence(buttonsDef[i].shortcut));
@@ -286,7 +276,7 @@ void OssoCalculatorUI::createLayout() {
 	if ( ! portrait )
 		buttonsLayout->setContentsMargins(10, 17, 0, 10);
 
-	buttonsLayout->setSpacing(12);
+	buttonsLayout->setSpacing(9);
 
 	for ( int i = 0; ! buttonsDef[i].name.isEmpty(); ++i ) {
 
@@ -396,7 +386,7 @@ void OssoCalculatorUI::numericEnable() {
 		return;
 
 	foreach ( OssoCalculatorButton * button, buttons )
-		if ( button->objectName().at(0).isDigit() || button->objectName() == "calc_bv_tr_decimal" )
+		if ( button->name().at(0).isDigit() || button->name() == "calc_bv_tr_decimal" )
 			button->setEnabled(true);
 
 	numericDisabled = false;
@@ -409,7 +399,7 @@ void OssoCalculatorUI::numericDisable() {
 		return;
 
 	foreach ( OssoCalculatorButton * button, buttons )
-		if ( button->objectName().at(0).isDigit() || button->objectName() == "calc_bv_tr_decimal" )
+		if ( button->name().at(0).isDigit() || button->name() == "calc_bv_tr_decimal" )
 			button->setEnabled(false);
 
 	numericDisabled = true;
