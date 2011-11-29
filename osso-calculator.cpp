@@ -260,7 +260,7 @@ void OssoCalculator::clickedButton(const QString &name) {
 		ui->displayErase();
 
 		if ( name == "calc_bv_tr_percent" )
-			expression += " * 0.01 * ";
+			expression += " % 1.00 * ";
 		else if ( name == "calc_bv_tr_add" )
 			expression += " + ";
 		else if ( name == "calc_bv_tr_subtract" )
@@ -280,6 +280,9 @@ void OssoCalculator::clickedButton(const QString &name) {
 
 		} else {
 
+			if ( expression.right(10) == " % 1.00 * " )
+				expression.chop(2);
+
 			QChar last = expression.trimmed().at(expression.trimmed().size()-1);
 
 			if ( ! last.isDigit() && last != ')' ) {
@@ -296,6 +299,25 @@ void OssoCalculator::clickedButton(const QString &name) {
 			expression += ") ";
 			ui->historyAppendExpression(_("calc_bv_tr_closebracket") + ' ');
 			--brackets;
+
+		}
+
+		for ( int i = 0; i < expression.size(); ++i ) {
+
+			if ( expression[i] != '%' )
+				continue;
+
+			expression[i] = '*';
+
+			if ( i+9 >= expression.size() )
+				continue;
+
+			if ( expression[i+9].isDigit() || expression[i+9] == '(' ) {
+
+				expression[i+2] = '0';
+				expression[i+5] = '1';
+
+			}
 
 		}
 
