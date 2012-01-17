@@ -1,3 +1,9 @@
+osso-calculator (2.0-1+0cssu2) unstable; urgency=low
+
+  * Fixed bug 12514
+
+ -- Pali Rohár <pali.rohar@gmail.com>  Tue, 17 Jan 2012 20:14:51 +0200
+
 osso-calculator (2.0-1+0cssu1) unstable; urgency=low
 
   * Initial release: opensource clone of Nokia OSSO Calculator
