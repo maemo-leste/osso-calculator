@@ -53,9 +53,11 @@ OssoCalculator::~OssoCalculator() {
 
 }
 
-void OssoCalculator::show() {
+void OssoCalculator::top_application() {
 
 	window->show();
+	window->raise();
+	window->activateWindow();
 
 #ifdef Q_WS_MAEMO_5
 	QTimer::singleShot ( 700, ui, SLOT( takeScreenshot() ) );

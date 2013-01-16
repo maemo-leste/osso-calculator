@@ -30,12 +30,14 @@ class OssoCalculatorUI;
 class OssoCalculator : public QObject {
 
 	Q_OBJECT
+	Q_CLASSINFO("D-Bus Interface", "com.nokia.osso_calculator")
 
 	public:
 		OssoCalculator(QObject * parent = NULL);
 		~OssoCalculator();
 
-		void show();
+	public slots:
+		Q_SCRIPTABLE void top_application();
 
 	private:
 		OssoCalculatorUI * ui;

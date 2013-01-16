@@ -21,6 +21,7 @@
 
 #ifdef Q_WS_MAEMO_5
 #include <QDBusConnection>
+#include <QDBusMessage>
 #endif
 
 #include "osso-calculator.h"
@@ -34,17 +35,21 @@ int main(int argc, char * argv[]) {
 	app.setOrganizationName("osso-calculator");
 	app.setApplicationName("osso-calculator-ui");
 
-	OssoCalculator calculator;
+#ifdef Q_WS_MAEMO_5
+	if ( ! QDBusConnection::sessionBus().registerService("com.nokia.osso_calculator") ) {
+		QDBusConnection::sessionBus().send(QDBusMessage::createMethodCall("com.nokia.osso_calculator", "/com/nokia/osso_calculator", "com.nokia.osso_calculator", "top_application"));
+		return 0;
+	}
+#endif
+
+	OssoCalculator calculator(&app);
 
 #ifdef Q_WS_MAEMO_5
-	if ( ! QDBusConnection::sessionBus().registerService("com.nokia.osso_calculator") )
-		return 1;
-
-	if ( ! QDBusConnection::sessionBus().registerObject("/com/nokia/osso_calculator", &calculator) )
+	if ( ! QDBusConnection::sessionBus().registerObject("/com/nokia/osso_calculator", &calculator, QDBusConnection::ExportScriptableSlots) )
 		return 1;
 #endif
 
-	calculator.show();
+	calculator.top_application();
 
 	return app.exec();
 
