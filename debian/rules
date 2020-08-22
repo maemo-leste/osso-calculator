@@ -1,58 +1,10 @@
 #!/usr/bin/make -f
+%:
+	dh $@ --parallel
 
-builddir:
-	mkdir -p builddir
+override_dh_auto_configure:
+	qmake PREFIX=/usr osso-calculator.pro
 
-builddir/Makefile: builddir
-	cd builddir && qmake-qt4 PREFIX=/usr ../osso-calculator.pro
-
-build: build-stamp
-
-build-stamp: builddir/Makefile
-	dh_testdir
-	# Add here commands to compile the package.
-	cd builddir && $(MAKE)
-	touch $@
-
-clean:
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp
-	# Add here commands to clean up after the build process.
-	rm -rf builddir
-	dh_clean
-
-install: build
-	dh_testdir
-	dh_testroot
-	dh_clean -k
-	dh_installdirs
-
-	# Add here commands to install the package into debian/osso-calculator-ui
-	cd builddir && $(MAKE) INSTALL_ROOT=$(CURDIR)/debian/osso-calculator-ui install
-	mkdir -p debian/osso-calculator-ui/etc/others-menu/1400_tana_fi_utilities
-	ln -s /usr/share/applications/hildon/osso_calculator.desktop debian/osso-calculator-ui/etc/others-menu/1400_tana_fi_utilities/0100_osso_calculator.desktop
-
-# Build architecture-independent files here.
-binary-indep: build install
-# We have nothing to do by default.
-
-# Build architecture-dependent files here.
-binary-arch: build install
-	dh_testdir
-	dh_testroot
-	dh_installdocs
-	dh_installexamples
-	dh_installman
-	dh_link
-	dh_strip
-	dh_compress
-	dh_fixperms
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install configure
+override_dh_auto_install:
+	dh_auto_install
+	mv -v debian/tmp/* debian/osso-calculator-ui/
