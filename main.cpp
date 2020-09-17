@@ -20,7 +20,7 @@
 #include <QApplication>
 
 #ifdef Q_WS_MAEMO_5
-#include <QDBusConnection>
+#include <QDBusInterface>
 #include <QDBusMessage>
 #endif
 
