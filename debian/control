@@ -2,7 +2,11 @@ Source: osso-calculator
 Section: misc
 Priority: optional
 Maintainer: Pali Rohár <pali.rohar@gmail.com>
-Build-Depends: debhelper (>= 10), qtbase5-dev, qt5-default, libqt5maemo5-dev
+Build-Depends: debhelper (>= 10),
+    qtbase5-dev,
+    qt5-default,
+    libqt5maemo5-dev,
+    libqt5x11extras5-dev,
 
 Package: osso-calculator
 Architecture: all
@@ -11,6 +15,10 @@ Description: Calculator meta package, that depends on UI and engine packages.
 
 Package: osso-calculator-ui
 Architecture: any
-Depends: osso-calculator-ui-l10n-mr0 | osso-calculator-ui-l10n-mr, osso-icons-default, ${shlibs:Depends}, ${misc:Depends}
+Depends: osso-calculator-ui-l10n-mr0 | osso-calculator-ui-l10n-mr,
+    osso-icons-default,
+    libqt5x11extras5,
+    qt-platform-maemo,
+    ${shlibs:Depends}, ${misc:Depends}
 Description: OSSO Calculator UI
  OSSO Calculator UI. Includes all calculation and memory functionalities.
