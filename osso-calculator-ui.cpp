@@ -144,7 +144,7 @@ OssoCalculatorUI::OssoCalculatorUI(QMainWindow * window) {
 	window->setWindowTitle(_("calc_ap_title_calculator"));
 
 #ifdef Q_WS_MAEMO_5
-	window->setAttribute(Qt::WA_Maemo5AutoOrientation, true);
+    window->setProperty("X-Maemo-Orientation", 2); // XXX: 2 = auto orientation
 #endif
 
 	for ( int i = 0; ! buttonsDef[i].name.isEmpty(); ++i ) {
