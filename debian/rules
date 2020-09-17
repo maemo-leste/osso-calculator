@@ -3,7 +3,7 @@
 	dh $@ --parallel
 
 override_dh_auto_configure:
-	qmake PREFIX=/usr osso-calculator.pro
+	qmake PREFIX=/usr osso-calculator.pro -spec maemo
 
 override_dh_auto_install:
 	dh_auto_install
