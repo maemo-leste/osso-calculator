@@ -20,6 +20,9 @@
 TEMPLATE = app
 TARGET = osso_calculator
 
+QT += widgets
+LIBS += -lX11
+
 unix {
    INSTALLS += target desktop
    target.path = $$PREFIX/bin
@@ -28,7 +31,7 @@ unix {
 }
 
 maemo5 {
-   QT += dbus maemo5
+   QT += dbus maemo5 x11extras
    INSTALLS += service
    service.path = $$PREFIX/share/dbus-1/services
    service.files += com.nokia.osso_calculator.service
