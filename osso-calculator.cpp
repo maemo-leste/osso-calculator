@@ -56,6 +56,11 @@ OssoCalculator::~OssoCalculator() {
 void OssoCalculator::top_application() {
 
 	window->show();
+
+#ifdef Q_WS_MAEMO_5
+    window->menuBar()->hide(); // hide menubar
+#endif
+
 	window->raise();
 	window->activateWindow();
 
